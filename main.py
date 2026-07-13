@@ -1,38 +1,31 @@
-"""Generated model-serving API for Medical Chatbot (Fraud Modelling Application)."""
+"""Generated chatbot service for Medical Chatbot."""
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-from typing import Any
-import os, joblib
+import os
 
 app = FastAPI(title="Medical Chatbot")
-FEATURES = []
-TARGET = None
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.joblib")
-_model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
+KB = {'about': 'This is the Medical Chatbot assistant. Goal: Please develop a Medical Chatbot application based on 5 Agents like - Cancer Care, Diabetes, Mental Illness, Cardio & Respiratory  Consider CDC & PubMed as RAG Database  Add features like chat message download button, Prescription download button, Mike button, Multimodal, Multilingual - Hindi, English & Spanish.', 'rules': 'Validate & sanitise all inputs against the declared schema. · Log every decision/response immutably for audit. · Produce cluster/anomaly assignments with a quality score. · Persist the fitted model + assignment for each input row.', 'validate': 'Validate & sanitise all inputs against the declared schema.', 'sanitise': 'Validate & sanitise all inputs against the declared schema.', 'inputs': 'Validate & sanitise all inputs against the declared schema.', 'every': 'Log every decision/response immutably for audit.', 'decision/response': 'Log every decision/response immutably for audit.', 'immutably': 'Log every decision/response immutably for audit.', 'produce': 'Produce cluster/anomaly assignments with a quality score.', 'cluster/anomaly': 'Produce cluster/anomaly assignments with a quality score.', 'assignments': 'Produce cluster/anomaly assignments with a quality score.', 'persist': 'Persist the fitted model + assignment for each input row.', 'fitted': 'Persist the fitted model + assignment for each input row.', 'model': 'Persist the fitted model + assignment for each input row.'}
+RED_FLAGS = ["chest pain", "can't breathe", "suicid", "want to die"]
+
+class ChatIn(BaseModel):
+    message: str
 
 @app.get("/health")
-def health(): return {"status": "ok", "model_loaded": _model is not None}
+def health(): return {"status": "ok", "app": "MC"}
 
-@app.post("/predict")
-def predict(payload: dict[str, Any]):
-    if _model is None:
-        return {"error": "model not trained yet — run train.py first"}
-    import numpy as np
-    x = np.array([[float(payload.get(f, 0)) for f in FEATURES]])
-    try:
-        if hasattr(_model, "predict_proba"):
-            proba = _model.predict_proba(x)[0].tolist()
-            pred = _model.predict(x)[0]
-            return {"prediction": _to_native(pred), "proba": proba, "target": TARGET}
-        pred = _model.predict(x)[0]
-        return {"prediction": _to_native(pred), "target": TARGET}
-    except Exception as e:
-        return {"error": str(e)}
+@app.post("/chat")
+def chat(inp: ChatIn):
+    text = inp.message.lower()
+    if any(f in text for f in RED_FLAGS):
+        return {"answer": "This may be an emergency. Please call your local emergency number now.", "source": "SAFETY"}
 
-def _to_native(v):
-    try: return v.item()
-    except Exception: return v
+    # Simple keyword match retriever
+    for k, val in KB.items():
+        if k in text:
+            return {"answer": f"Knowledge Retrieval match: {val}", "source": "Internal Knowledge Base"}
+
+    return {"answer": f"Here is guidance regarding Medical Chatbot: Please develop a Medical Chatbot application based on 5 Agents like - Cancer Care, Diabetes, Mental Illness, Cardio & Respiratory  Consider CDC & PubMed as RAG Database  Add features like chat message download button, Prescription download button, Mike button, Multimodal, Multilingual - Hindi, English & Spanish", "source": "Local LLM Inference"}
 
 @app.get("/", response_class=HTMLResponse)
 def index():

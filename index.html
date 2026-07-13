@@ -176,17 +176,17 @@
           <p>Please develop a Medical Chatbot application based on 5 Agents like - Cancer Care, Diabetes, Mental Illness, Cardio & Respiratory
 	Consider CDC & PubMed as RAG Database
 	Add features like chat message download button, Prescription download button, Mike button, Multimodal, Multilingual - Hindi, English & Spanish</p>
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="field_feature_a">Feature A</label>
-              <input id="field_feature_a" type="number" value="42.5" placeholder="Enter Feature A">
-            </div>
 
-            <div class="form-group">
-              <label for="field_feature_b">Feature B</label>
-              <input id="field_feature_b" type="number" value="88.2" placeholder="Enter Feature B">
-            </div>
-            </div><button onclick="go()" style="width:100%; margin-top:10px;">Evaluate Requirements</button>
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMsgs">
+            <div class="msg system">Welcome! Ask me anything about the application.</div>
+          </div>
+          <div class="chat-input-row">
+            <input id="inp" placeholder="Type your message here..." onkeydown="if(event.key==='Enter') go()">
+            <button onclick="go()">Send</button>
+          </div>
+        </div>
+
 
           <div class="result-panel" id="resultPanel" style="display:none;">
             <div class="status-badge" id="statusBadge" style="display:none;"></div>
@@ -199,34 +199,38 @@
         <script>
 
         async function go() {
-          const payload = {feature_a: parseFloat(document.getElementById('field_feature_a').value || 0), feature_b: parseFloat(document.getElementById('field_feature_b').value || 0)};
-          const resPanel = document.getElementById('resultPanel');
-          const out = document.getElementById('out');
-          const status = document.getElementById('statusBadge');
-          const reasonDiv = document.getElementById('reasonText');
+          const input = document.getElementById('inp');
+          const text = input.value.trim();
+          if (!text) return;
+
+          const msgs = document.getElementById('chatMsgs');
+
+          // Render user message
+          const userDiv = document.createElement('div');
+          userDiv.className = 'msg user';
+          userDiv.textContent = text;
+          msgs.appendChild(userDiv);
+          input.value = '';
+          msgs.scrollTop = msgs.scrollHeight;
 
           try {
-            const r = await fetch('/predict', {
+            const r = await fetch('/chat', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
+              body: JSON.stringify({ message: text })
             });
             const data = await r.json();
-            resPanel.style.display = 'block';
-            out.textContent = JSON.stringify(data, null, 2);
 
-            if (data.decision) {
-              status.style.display = 'inline-flex';
-              status.className = 'status-badge ' + data.decision.toLowerCase();
-              status.textContent = data.decision;
-              reasonDiv.innerHTML = '<b>Evaluation Result:</b><br>' + data.reasons.join('<br>');
-            } else {
-              status.style.display = 'none';
-              reasonDiv.textContent = 'Prediction complete.';
-            }
+            const botDiv = document.createElement('div');
+            botDiv.className = 'msg bot';
+            botDiv.innerHTML = data.answer + (data.source ? ' <span style="font-size:10px; color:var(--txt-muted); display:block; margin-top:4px;">Source: ' + data.source + '</span>' : '');
+            msgs.appendChild(botDiv);
+            msgs.scrollTop = msgs.scrollHeight;
           } catch(e) {
-            resPanel.style.display = 'block';
-            out.textContent = 'Error: ' + e.message;
+            const errDiv = document.createElement('div');
+            errDiv.className = 'msg system';
+            errDiv.textContent = 'Error connecting to service.';
+            msgs.appendChild(errDiv);
           }
         }
 

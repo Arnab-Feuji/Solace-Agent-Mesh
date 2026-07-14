@@ -12,8 +12,8 @@ BUILD_SPEC: dict[str, Any] = {
   "project_name": "Medical Chatbot",
   "app_type": "Conversational AI Chatbot ",
   "app_kind": "chatbot",
-  "summary": "Develop a medical chatbot application featuring agents specialized in cancer care, diabetes, mental illness, cardiovascular, and respiratory conditions. Utilize CDC and PubMed as the primary resources for retrieval-augmented generation databases, and include features like chat me",
-  "requirement_text": "Organisation: Feuji Software Solution Pvt. Ltd.\nSegment: Healthcare\n\nAI SUGGESTED & EDITED PARAMETERS:\nAPP TYPE: Conversational AI Chatbot\nSEGMENT: Healthcare\nPROBLEM: Develop a medical chatbot application featuring agents specialized in cancer care, diabetes, mental illness, cardiovascular, and respiratory conditions. Utilize CDC and PubMed as the primary resources for retrieval-augmented generation databases, and include features like chat message download, prescription download, a mic button for voice input, multimodal interaction, and support for English, Hindi, and Spanish.\nTOOLS AND TECH STACKS: Python, FastAPI, React, TensorFlow, MongoDB\nKNOWLEDGE BASE SOURCES: CDC, PubMed, peer-reviewed medical journals\nLLM FOUNDATION MODEL: MedGPT-Plus for medical dialogue and Claude Health for emotional support\nSUPPORTED LANGUAGES: English, Hindi, Spanish\nMULTIMODAL FEATURES: Text, voice, and document parsing capabilities\nPERSONA AND TONE: Trustworthy, compassionate, and informative; aligned with healthcare communication standards\nCUSTOM FEATURES: Chat message download, prescription download capability, voice input support, multilingual options\nEXPECTED OUTCOME: Achieve high user satisfac",
+  "summary": "Medical Chatbot — patient-centric conversational assistant.",
+  "requirement_text": "Organisation: Feuji Software Solution Pvt. Ltd.\nSegment: Healthcare\n\nAI SUGGESTED & EDITED PARAMETERS:\nAPP TYPE: Conversational AI Chatbot\nSEGMENT: Healthcare\nOBJECTIVE: Develop a medical chatbot application with specialized agents for cancer care, diabetes, mental illness, and cardio-respiratory conditions.\nDATA SOURCE REFERENCES: Consider CDC and PubMed for retrieval-augmented generation (RAG) database integration.\nTOOLS AND TECH STACKS: Utilize Python, TensorFlow, FastAPI, and React for development.\nKNOWLEDGE BASE SOURCES: Incorporate information from CDC and PubMed.\nLLM FOUNDATION MODEL: Leverage GPT-4 with a plugin architecture for advanced responses.\nPERSONA AND TONE: Maintain a trustworthy, empathetic, supportive tone focused on healthcare.\nFALLBACK MECHANISMS: Implement human handoff options and predefined FAQs for reliable fallback.\nSUPPORTED LANGUAGES: Support multilingual interaction in English, Hindi, and Spanish.\nSPECIAL FEATURES: Include features like chat message download, prescription download, voice interaction capabilities, and multimodal functionalities.\nEXPECTED OUTCOME: Deliver accurate healthcare guidance, enhance user satisfaction, and provide seamless multil",
   "requestor": "ad_isi03@hotmail.com",
   "deploy_port": 8095,
   "api": {
@@ -168,7 +168,8 @@ BUILD_SPEC: dict[str, Any] = {
   "output_fields": [],
   "rag_sources": [
     "CDC",
-    "PubMed"
+    "PubMed",
+    "FDA"
   ],
   "domains": [
     "Cancer Care",
@@ -230,7 +231,8 @@ BUILD_SPEC: dict[str, Any] = {
   "constraints": [],
   "nonfunctional": [],
   "escalation_phrases": [
-    "can't breathe"
+    "can't breathe",
+    "fraud"
   ],
   "model": {},
   "demo_scope": {

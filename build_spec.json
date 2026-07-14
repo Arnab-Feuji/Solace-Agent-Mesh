@@ -1,0 +1,250 @@
+{
+  "version": 1,
+  "project_key": "MC",
+  "project_name": "Medical Chatbot",
+  "app_type": "Conversational AI Chatbot ",
+  "app_kind": "chatbot",
+  "summary": "Develop a medical chatbot application featuring agents specialized in cancer care, diabetes, mental illness, cardiovascular, and respiratory conditions. Utilize CDC and PubMed as the primary resources for retrieval-augmented generation databases, and include features like chat me",
+  "requirement_text": "Organisation: Feuji Software Solution Pvt. Ltd.\nSegment: Healthcare\n\nAI SUGGESTED & EDITED PARAMETERS:\nAPP TYPE: Conversational AI Chatbot\nSEGMENT: Healthcare\nPROBLEM: Develop a medical chatbot application featuring agents specialized in cancer care, diabetes, mental illness, cardiovascular, and respiratory conditions. Utilize CDC and PubMed as the primary resources for retrieval-augmented generation databases, and include features like chat message download, prescription download, a mic button for voice input, multimodal interaction, and support for English, Hindi, and Spanish.\nTOOLS AND TECH STACKS: Python, FastAPI, React, TensorFlow, MongoDB\nKNOWLEDGE BASE SOURCES: CDC, PubMed, peer-reviewed medical journals\nLLM FOUNDATION MODEL: MedGPT-Plus for medical dialogue and Claude Health for emotional support\nSUPPORTED LANGUAGES: English, Hindi, Spanish\nMULTIMODAL FEATURES: Text, voice, and document parsing capabilities\nPERSONA AND TONE: Trustworthy, compassionate, and informative; aligned with healthcare communication standards\nCUSTOM FEATURES: Chat message download, prescription download capability, voice input support, multilingual options\nEXPECTED OUTCOME: Achieve high user satisfac",
+  "requestor": "ad_isi03@hotmail.com",
+  "deploy_port": 8095,
+  "api": {
+    "health": "/health",
+    "meta": "/meta",
+    "primary": "/chat",
+    "stories": "/stories",
+    "criteria": "/criteria"
+  },
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "given": "a valid request",
+      "when": "rule BR-1 applies",
+      "then": "Validate & sanitise all inputs against the declared schema."
+    },
+    {
+      "id": "AC-2",
+      "given": "a valid request",
+      "when": "rule BR-2 applies",
+      "then": "Log every decision/response immutably for audit."
+    },
+    {
+      "id": "AC-3",
+      "given": "a valid request",
+      "when": "rule BR-3 applies",
+      "then": "Produce cluster/anomaly assignments with a quality score."
+    },
+    {
+      "id": "AC-4",
+      "given": "a valid request",
+      "when": "rule BR-4 applies",
+      "then": "Persist the fitted model + assignment for each input row."
+    }
+  ],
+  "business_rules": [
+    {
+      "id": "BR-1",
+      "statement": "Validate & sanitise all inputs against the declared schema.",
+      "rationale": ""
+    },
+    {
+      "id": "BR-2",
+      "statement": "Log every decision/response immutably for audit.",
+      "rationale": ""
+    },
+    {
+      "id": "BR-3",
+      "statement": "Produce cluster/anomaly assignments with a quality score.",
+      "rationale": ""
+    },
+    {
+      "id": "BR-4",
+      "statement": "Persist the fitted model + assignment for each input row.",
+      "rationale": ""
+    }
+  ],
+  "backlog": {
+    "project": "MC",
+    "total_points": 30,
+    "epic_count": 4,
+    "story_count": 6
+  },
+  "stories": [
+    {
+      "id": "S1",
+      "title": "Cancer Care specialty agent + RAG citations",
+      "points": 5,
+      "epic": "Conversational UX",
+      "acceptance_criteria_ids": [],
+      "acceptance_criteria": []
+    },
+    {
+      "id": "S2",
+      "title": "Diabetes specialty agent + RAG citations",
+      "points": 5,
+      "epic": "Conversational UX",
+      "acceptance_criteria_ids": [],
+      "acceptance_criteria": []
+    },
+    {
+      "id": "S3",
+      "title": "Mental Illness specialty agent + RAG citations",
+      "points": 5,
+      "epic": "RAG & Specialty Agents",
+      "acceptance_criteria_ids": [],
+      "acceptance_criteria": []
+    },
+    {
+      "id": "S4",
+      "title": "Cardiology specialty agent + RAG citations",
+      "points": 5,
+      "epic": "RAG & Specialty Agents",
+      "acceptance_criteria_ids": [],
+      "acceptance_criteria": []
+    },
+    {
+      "id": "S5",
+      "title": "Respiratory specialty agent + RAG citations",
+      "points": 5,
+      "epic": "RAG & Specialty Agents",
+      "acceptance_criteria_ids": [],
+      "acceptance_criteria": []
+    },
+    {
+      "id": "S5",
+      "title": "Voice, multilingual, prescription export",
+      "points": 5,
+      "epic": "Safety & Multimodal",
+      "acceptance_criteria_ids": [],
+      "acceptance_criteria": []
+    }
+  ],
+  "architecture": {
+    "has_diagram": true,
+    "modules": [
+      "api",
+      "domain",
+      "ui",
+      "data",
+      "orchestration",
+      "context"
+    ],
+    "services": [],
+    "render_url": "https://mermaid.ink/img/pako:eNpVz70KgzAUBeBXuWRqodK_zaEgHULBYgkUh9ThNrliaKxwjZUivnurm8sZzneWMwjTWBKxKH3Tmwo5QKoeb4B7S7zSUxZriKITyFwntwtIDNTjt5g2Mp8lU2edsamoDYyh4dn-5YznnVYU2NGHGLagErnkvZYdsmV0vl3KQafpFUr0_onmtbSjTjrrQiE2oiau0VkRDyJUVE9fLJXY-SDG8Qdt6UWF",
+    "excerpt": "%% C4 Context\nflowchart LR\n  User([User]) --> GW[API Gateway]\n  GW --> ORC[Orchestrator]\n  ORC --> C0[Retriever / RAG]\n  ORC --> C1[Guardrails]\n  ORC --> C2[LLM fallback]\n  ORC --> C3[Audit]\n\n%% Sequence\nsequenceDiagram\n  User->>ORC: message\n  ORC->>SAFE: guardrail check\n  ORC->>RAG: retrieve (sources)\n  RAG-->>ORC: passages + citation\n  ORC-->>User: answer + source\n\n%% ER\nerDiagram\n  MC_REQUEST ||--o| MC_RESPONSE : yields\n  MC_REQUEST ||--o{ AUDIT_EVENT : logs"
+  },
+  "modules": [
+    "api",
+    "domain",
+    "ui",
+    "data",
+    "orchestration",
+    "context"
+  ],
+  "input_fields": [
+    {
+      "name": "feature_a",
+      "dtype": "float",
+      "description": ""
+    },
+    {
+      "name": "feature_b",
+      "dtype": "float",
+      "description": ""
+    }
+  ],
+  "sample_input": {
+    "feature_a": 42.5,
+    "feature_b": 88.2
+  },
+  "output_fields": [],
+  "rag_sources": [
+    "CDC",
+    "PubMed"
+  ],
+  "domains": [
+    "Cancer Care",
+    "Diabetes",
+    "Mental Illness",
+    "Cardiology",
+    "Respiratory"
+  ],
+  "agents": [
+    {
+      "id": "A1",
+      "name": "Cancer Care",
+      "domain": "Cancer Care",
+      "persona": "caring, knowledgeable, patient-centric"
+    },
+    {
+      "id": "A2",
+      "name": "Diabetes Agent",
+      "domain": "Diabetes",
+      "persona": "caring, knowledgeable, patient-centric"
+    },
+    {
+      "id": "A3",
+      "name": "Mental Illness Agent",
+      "domain": "Mental Illness",
+      "persona": "caring, knowledgeable, patient-centric"
+    },
+    {
+      "id": "A4",
+      "name": "Cardiology Agent",
+      "domain": "Cardiology",
+      "persona": "caring, knowledgeable, patient-centric"
+    },
+    {
+      "id": "A5",
+      "name": "Respiratory Agent",
+      "domain": "Respiratory",
+      "persona": "caring, knowledgeable, patient-centric"
+    },
+    {
+      "id": "A6",
+      "name": "General Care Agent",
+      "domain": "General Care",
+      "persona": "caring, knowledgeable, patient-centric"
+    }
+  ],
+  "languages": [
+    "en",
+    "hi",
+    "es"
+  ],
+  "features": {
+    "chat_download": true,
+    "prescription_download": true,
+    "voice_input": true,
+    "multimodal": true,
+    "multilingual": true
+  },
+  "constraints": [],
+  "nonfunctional": [],
+  "escalation_phrases": [
+    "can't breathe"
+  ],
+  "model": {},
+  "demo_scope": {
+    "strategy": "sprint1_stories",
+    "story_ids": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5"
+    ],
+    "ac_ids": [
+      "AC-1",
+      "AC-2",
+      "AC-3",
+      "AC-4"
+    ],
+    "rule_ids": [
+      "BR-1",
+      "BR-2",
+      "BR-3",
+      "BR-4"
+    ]
+  }
+}

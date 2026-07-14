@@ -70,11 +70,11 @@ select { background:#0f1930; color:var(--txt); border:1px solid var(--line); bor
 <div class="portal">
   <aside class="sidebar">
     <div class="brand">Medical Chatbot</div>
-    <div class="blurb">Develop a medical chatbot application featuring agents specialized in cancer care, diabetes, mental illness, cardiovascular, and respiratory conditions. Utilize CDC and PubMed as t</div>
+    <div class="blurb">Medical Chatbot — patient-centric conversational assistant.</div>
     <div class="section-label">Specialty agents</div>
     <div id="agentList"><button type="button" class="agent-btn" data-agent="A1" onclick="selectAgent('A1')">Cancer Care</button><button type="button" class="agent-btn" data-agent="A2" onclick="selectAgent('A2')">Diabetes Agent</button><button type="button" class="agent-btn" data-agent="A3" onclick="selectAgent('A3')">Mental Illness Agent</button><button type="button" class="agent-btn" data-agent="A4" onclick="selectAgent('A4')">Cardiology Agent</button><button type="button" class="agent-btn" data-agent="A5" onclick="selectAgent('A5')">Respiratory Agent</button><button type="button" class="agent-btn" data-agent="A6" onclick="selectAgent('A6')">General Care Agent</button></div>
     <div class="section-label" style="margin-top:10px;">RAG sources</div>
-    <div class="blurb">CDC, PubMed</div>
+    <div class="blurb">CDC, PubMed, FDA</div>
     <div class="section-label" style="margin-top:10px;">Language</div>
     <select id="langSelect"><option value="en">English</option><option value="hi">Hindi</option><option value="es">Spanish</option></select>
   </aside>
@@ -90,7 +90,7 @@ select { background:#0f1930; color:var(--txt); border:1px solid var(--line); bor
       </div>
     </div>
     <div class="messages" id="chatMsgs">
-      <div class="msg system">Welcome. Choose a specialty agent or just ask — answers vary by topic using CDC, PubMed-style guidance.</div>
+      <div class="msg system">Welcome. Choose a specialty agent or just ask — answers vary by topic using CDC, PubMed, FDA-style guidance.</div>
     </div>
     <div class="composer-wrap">
       <div class="composer">
@@ -176,6 +176,6 @@ function downloadChat() {
 }
 
 function downloadRx() {
-  cons
+  const rx = lastPrescription || {title:'Care tip sheet', recommendations:['Ask a question first to generate a tip sh
 
 ...[Preview truncated, download full file to view]...

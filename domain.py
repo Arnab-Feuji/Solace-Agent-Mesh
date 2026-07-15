@@ -13,7 +13,7 @@ BUILD_SPEC: dict[str, Any] = {
   "app_type": "Conversational AI Chatbot ",
   "app_kind": "chatbot",
   "summary": "Medical Chatbot — patient-centric conversational assistant.",
-  "requirement_text": "Organisation: Feuji Software Solution Pvt. Ltd.\nSegment: Healthcare\n\nAI SUGGESTED & EDITED PARAMETERS:\nAPP TYPE: Conversational AI Chatbot\nSEGMENT: Healthcare\nOBJECTIVE: Develop a medical chatbot application with specialized agents for cancer care, diabetes, mental illness, and cardio-respiratory conditions.\nDATA SOURCE REFERENCES: Consider CDC and PubMed for retrieval-augmented generation (RAG) database integration.\nTOOLS AND TECH STACKS: Utilize Python, TensorFlow, FastAPI, and React for development.\nKNOWLEDGE BASE SOURCES: Incorporate information from CDC and PubMed.\nLLM FOUNDATION MODEL: Leverage GPT-4 with a plugin architecture for advanced responses.\nPERSONA AND TONE: Maintain a trustworthy, empathetic, supportive tone focused on healthcare.\nFALLBACK MECHANISMS: Implement human handoff options and predefined FAQs for reliable fallback.\nSUPPORTED LANGUAGES: Support multilingual interaction in English, Hindi, and Spanish.\nSPECIAL FEATURES: Include features like chat message download, prescription download, voice interaction capabilities, and multimodal functionalities.\nEXPECTED OUTCOME: Deliver accurate healthcare guidance, enhance user satisfaction, and provide seamless multil",
+  "requirement_text": "Organisation: Feuji Software Solution Pvt. Ltd.\nSegment: Healthcare\n\nAI SUGGESTED & EDITED PARAMETERS:\nAPP TYPE: Conversational AI Chatbot\nSEGMENT: Healthcare\nPROBLEM STATEMENT: Develop a Medical Chatbot application featuring five specialized agents: Cancer Care, Diabetes, Mental Illness, Cardiovascular, and Respiratory. Utilize CDC and PubMed as RAG databases and include features such as chat message download, prescription download, voice input through a microphone button, and support for multimodal and multilingual interactions in Hindi, English, and Spanish.\nTOOLS AND TECH STACKS: Python, FastAPI, React, PostgreSQL for robust backend and frontend development\nKNOWLEDGE BASE SOURCES: Centers for Disease Control and Prevention (CDC), PubMed for reliable medical information\nLLM FOUNDATION MODEL: GPT-4, Claude 3.5 Sonnet for advanced natural language understanding and generation\nPERSONA AND TONE: Compassionate, knowledgeable, and supportive to facilitate empathetic and informative patient interactions\nSUPPORTED LANGUAGES: Hindi, English, Spanish to cater to a wider demographic reach\nPERSONA SPECIALISTS AGENT: Specialized agent support for Cancer, Diabetes, Mental Illness, Cardiovascu",
   "requestor": "ad_isi03@hotmail.com",
   "deploy_port": 8095,
   "api": {
@@ -138,8 +138,8 @@ BUILD_SPEC: dict[str, Any] = {
       "context"
     ],
     "services": [],
-    "render_url": "https://mermaid.ink/img/pako:eNpVz70KgzAUBeBXuWRqodK_zaEgHULBYgkUh9ThNrliaKxwjZUivnurm8sZzneWMwjTWBKxKH3Tmwo5QKoeb4B7S7zSUxZriKITyFwntwtIDNTjt5g2Mp8lU2edsamoDYyh4dn-5YznnVYU2NGHGLagErnkvZYdsmV0vl3KQafpFUr0_onmtbSjTjrrQiE2oiau0VkRDyJUVE9fLJXY-SDG8Qdt6UWF",
-    "excerpt": "%% C4 Context\nflowchart LR\n  User([User]) --> GW[API Gateway]\n  GW --> ORC[Orchestrator]\n  ORC --> C0[Retriever / RAG]\n  ORC --> C1[Guardrails]\n  ORC --> C2[LLM fallback]\n  ORC --> C3[Audit]\n\n%% Sequence\nsequenceDiagram\n  User->>ORC: message\n  ORC->>SAFE: guardrail check\n  ORC->>RAG: retrieve (sources)\n  RAG-->>ORC: passages + citation\n  ORC-->>User: answer + source\n\n%% ER\nerDiagram\n  MC_REQUEST ||--o| MC_RESPONSE : yields\n  MC_REQUEST ||--o{ AUDIT_EVENT : logs"
+    "render_url": "https://mermaid.ink/img/pako:eNptk0GP2jAQhf_KKKetypbuwl44VMp6aUrBShSgRXI5mGQAS4mNHKcsWu1_7zjelZqWgw_P873n8Th5iQpTYjSJ9pU5F0dpHSzyXxogZqvPNyKTTqF22w9vW3c3glVKq0JJHTaTnyLOZpBIh2d52fqtNGeCM0htccTGWemM3b5Hwu3tF_IEZyeI9moZf52Kpdyju0DSSltaqarmPa8jPdLlJHeCSV2gBSYtQnzwLf5NEhHAe_Gk5A4dNlep-0CNBKearGBWVRqb6-wosGM62pbKVOZwucqNA_cgcmxOqrv9dfDByzxOBC3I0VmFv9H2IKp4OX8Uc23OFZYHnAB7YgPI2h3HcgDf6YSeZf7o1WLBBS3wPRjdIDBTn0zzTzwRXq43gh2lg8xYP4T1rAetN4EJXdMTejndZGL6fCID9eO9HyF_7tmI8JJzwdvKqdqUFD2EH0YVCDN9oC-jx3Meclcj0b_Tpy5sNXorj0Wi3Ld29x_QzT1Nl2KYtg7MHprCnGhceiiHfZigaBDVaGupymjyErkj1v4fKHEvqdno9fUP9bLuCg==",
+    "excerpt": "%% Forge Solution Architecture — MC / Medical Chatbot\n%% Derived from SOW + BRD + Backlog + Brief (chatbot)\n%% Domains: Cancer Care, Diabetes, Mental Illness, Cardiology, Respiratory\n%% Stories: S1, S2, S3, S4, S5, S5\n\n%% C4 Context\nflowchart LR\n  ACT0([Patient])\n  ACT1([Clinician])\n  GW[API Gateway]\n  ORC[MC Orchestrator]\n  ACT0 --> GW\n  GW --> ORC\n  SAFE[Safety Guardrails]\n  ORC --> SAFE\n  AG1[Cancer Care Agent]\n  ORC --> AG1\n  AG2[Diabetes Agent]\n  ORC --> AG2\n  AG3[Mental Illness Agent]\n  ORC --> AG3\n  AG4[Cardiology Agent]\n  ORC --> AG4\n  AG5[Respiratory Agent]\n  ORC --> AG5\n  RAG[RAG Retriever]\n  ORC --> RAG\n  KB[Knowledge: CDC, PubMed, Jira]\n  ORC --> KB\n  LLM[LLM Response Composer]\n  ORC --> LLM\n  UX[Chat Portal UI]\n  ORC --> UX\n  UX --> ACT0\n  EXP[Export: Chat + Rx]\n  ORC --> EXP\n  MM[Multimodal / Voice Ingest]\n  ORC --> MM\n  EXT3[Jira]\n  ORC -.-> EXT3\n  EXT4[GitHub]\n  ORC -.-> EXT4\n  OOS[/Out of scope: n/a/]\n  ORC -.-> OOS\n\n%% Sequence\nsequenceDiagram\n  participant User\n  participant Portal as Chat Portal\n  participant ORC as Orchestrator\n  participant SAFE as Guardrails\n  participant AG as Cancer Care Agent\n  participant RAG as RAG Retriever\n  participant KB as Knowledge Base\n  participant LLM as LLM Composer\n  User->>Portal: Cancer Care specialty agent + RAG citations\n  Portal->>ORC: chat message + language\n  ORC->>SAFE: safety / escalation check\n  ORC->>AG: route by specialty/domain\n  AG->>RAG: retrieve context\n  RAG->>KB: query CDC, PubMed\n  KB-->>RAG: passages "
   },
   "modules": [
     "api",
@@ -168,8 +168,7 @@ BUILD_SPEC: dict[str, Any] = {
   "output_fields": [],
   "rag_sources": [
     "CDC",
-    "PubMed",
-    "FDA"
+    "PubMed"
   ],
   "domains": [
     "Cancer Care",
@@ -231,8 +230,7 @@ BUILD_SPEC: dict[str, Any] = {
   "constraints": [],
   "nonfunctional": [],
   "escalation_phrases": [
-    "can't breathe",
-    "fraud"
+    "can't breathe"
   ],
   "model": {},
   "demo_scope": {
